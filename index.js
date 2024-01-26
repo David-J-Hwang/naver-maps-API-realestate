@@ -1,50 +1,5 @@
 import data from "./data.js";
 
-// ======================== OLD DATA ========================
-// const locations = [
-  //   { lat: 35.551032, lng: 129.263437 }, // my home
-  //   { lat: 37.3595704, lng: 127.105399 }, // naver green factory
-  // ];
-// ==========================================================
-
-// console.log(data)
-
-
-// Geocoding function
-// put address, return result.lat & result.lng
-// function geocode(address) {
-//   naver.maps.Service.geocode({query: address}, (status, response) => {
-//     if (status !== naver.maps.Service.Status.OK) {
-//       return alert("Something wrong!");
-//     }
-//     let result = {
-//       lat: response.v2.addresses[0].y,
-//       lng: response.v2.addresses[0].x,
-//     }
-//     return result;
-//   })
-// }
-
-for (let item of data) {
-  // console.log(item.jibunAddress); // 서울시 노원구 상계동 746-5, 서울시 도봉구 창동 30, ...
-  naver.maps.Service.geocode({ query: item.jibunAddress }, (status, response) => {
-    if (status !== naver.maps.Service.Status.OK) {
-      return alert("Something wrong!");
-    }
-    let result = {
-      lat: response.v2.addresses[0].y,
-      lng: response.v2.addresses[0].x,
-    };
-    console.log(result)
-
-    return new naver.maps.Marker({
-      position: new naver.maps.LatLng(result.lat, result.lng),
-      map,
-    })
-  });
-}
-
-
 let zoomNum = 11;
 const centerLat = 37.5666103;
 const centerLng = 126.9783882;
@@ -62,28 +17,66 @@ const map = new naver.maps.Map(document.getElementById("map"), mapOptions);
 map.setMapTypeId(N.MapTypeId.NORMAL);
 
 
+for (let item of data) {
+  // console.log(item.jibunAddress); // 서울시 노원구 상계동 746-5, 서울시 도봉구 창동 30, ...
+  naver.maps.Service.geocode({ query: item.jibunAddress }, (status, response) => {
+    if (status !== naver.maps.Service.Status.OK) {
+      return alert("Something wrong!");
+    }
+    let result = {
+      lat: response.v2.addresses[0].y,
+      lng: response.v2.addresses[0].x,
+    };
+    // console.log(result);
+
+    // return new naver.maps.Marker({
+    //   position: new naver.maps.LatLng(result.lat, result.lng),
+    //   map,
+    // });
+    let marker = new naver.maps.Marker({
+      position: new naver.maps.LatLng(result.lat, result.lng),
+      map, 
+    })
+
+    let content = `
+    <div style="min-width: 300px; padding: 1rem;">
+      <h3 style="text-align: center;">${item.name}</h3>
+      <p style="text-align: center;">${item.jibunAddress}</p>
+      <hr>
+      <h4>면적: ${item.size}m<sup>2</sup></h4>
+      <hr>
+      <h4>매매가: ${item.maemaePriceMin} ~ ${item.maemaePriceMax}</h4>
+      <h4>전세가: ${item.jeonsePriceMin} ~ ${item.jeonsePriceMax}</h4>
+      <h4>월세가: ${item.wolsePriceMin} ~ ${item.wolsePriceMax}</h4>
+      <hr>
+      <h4>세대당 주차대수: ${item.phr}</h4>
+      <h4>작성일: ${item.dateWritten}</h4>
+    </div>
+    `;
+
+    let infoWindow = new naver.maps.InfoWindow({
+      content: content,
+      width: 300,
+      backgroundColor: "#EEE",
+      borderColor: "#200E3A",
+      borderWidth: 3,
+      // anchorSize: ,
+      anchorSkew: true,
+      anchorColor: "#200E3A",
+    });
+
+    naver.maps.Event.addListener(marker, "click", () => {
+      if(infoWindow.getMap()) {
+        infoWindow.close();
+      } else {
+        infoWindow.open(map, marker);
+      }
+    })
+    }
+  );
 
 
-// naver.maps.Service.geocode({query: "불정로 6"}, (status, response) => {
-//     if (status !== naver.maps.Service.Status.OK) {
-//       return alert("Something wrong!");
-//     }
-
-//     let result = response.v2; // 검색 결과의 컨테이너
-//     let items = result.addresses; // 검색 결과의 배열
-//     items = response.v2.addresses
-
-//     console.log(items[0].y) // lat
-//     console.log(items[0].x) // lng
-//     response.v2.addresses[0].y
-//   }
-// );
-
-
-
-
-
-
+}
 
 
 window.navermap_authFailure = () => {
