@@ -1,0 +1,92 @@
+[
+  {
+    name: "상계주공2단지",
+    category: "아파트",
+
+    jibunAddress: "서울시 노원구 상계동 746-5",
+    roadAddress: "서울시 노원구 동일로 1355",
+    
+    size: 32,
+    
+    maemaePriceMin: undefined,
+    maemaePriceMax: undefined,
+    jeonsePriceMin: undefined,
+    jeonsePriceMax: undefined,
+    wolsePriceMin: 1000/50,
+    wolsePriceMax: 500/55,
+    전세가율: 50%,
+
+    작성날짜: 2024-01-26,
+
+    세대수: 2029,
+    층수: undefined,
+    사용승인일: 1987-11-21,
+    나이: undefined,
+    주차대수: 1004,
+    세대당 주차대수: 0.49,
+
+    메모: undefined,
+  },
+  {
+    name: "창동주공18단지",
+    category: "아파트",
+
+    jibunAddress: "서울시 도봉구 창동 30",
+    roadAddress: "서울시 도봉구 노해로70길 119",
+    
+    size: 32,
+    
+    maemaePriceMin: undefined,
+    maemaePriceMax: undefined,
+    jeonsePriceMin: undefined,
+    jeonsePriceMax: undefined,
+    wolsePriceMin: 1000/53,
+    wolsePriceMax: 1000/58,
+    전세가율: 32%,
+
+    작성날짜: 2024-01-26,
+
+    세대수: 910,
+    층수: undefined,
+    사용승인일: 1988-10-26,
+    나이: undefined,
+    주차대수: 634,
+    세대당 주차대수: 0.69,
+
+    메모: undefined,
+  },
+
+
+
+
+
+
+
+    {
+    name: "중계그린",
+    category: "아파트",
+
+    jibunAddress: "서울 노원구 중계동 502-1",
+    roadAddress: "서울 노원구 동일로207길 18",
+    
+    size: 32,
+    
+    maemaePriceMin: ,
+    maemaePriceMax: ,
+    jeonsePriceMin: ,
+    jeonsePriceMax: ,
+    wolsePriceMin: 1000/50,
+    wolsePriceMax: 500/55,
+    전세가율: ,
+
+    작성날짜: ,
+
+    세대수: ,
+    층수: ,
+    사용승인일: ,
+    나이: ,
+    주차대수: ,
+    세대당 주차대수: ,
+  },
+
+]
