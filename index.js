@@ -1,5 +1,7 @@
+// importing data
 import data from "./data.js";
 
+// map settings
 let zoomNum = 11;
 const centerLat = 37.5666103;
 const centerLng = 126.9783882;
@@ -13,32 +15,29 @@ const mapOptions = {
   },
 };
 
+// connecting this file with index.html
 const map = new naver.maps.Map(document.getElementById("map"), mapOptions);
 map.setMapTypeId(N.MapTypeId.NORMAL);
 
-
 for (let item of data) {
   // console.log(item.jibunAddress); // 서울시 노원구 상계동 746-5, 서울시 도봉구 창동 30, ...
-  naver.maps.Service.geocode({ query: item.jibunAddress }, (status, response) => {
-    if (status !== naver.maps.Service.Status.OK) {
-      return alert("Something wrong!");
-    }
-    let result = {
-      lat: response.v2.addresses[0].y,
-      lng: response.v2.addresses[0].x,
-    };
-    // console.log(result);
+  naver.maps.Service.geocode(
+    { query: item.jibunAddress },
+    (status, response) => {
+      if (status !== naver.maps.Service.Status.OK) {
+        return alert("Something wrong!");
+      }
+      let result = {
+        lat: response.v2.addresses[0].y,
+        lng: response.v2.addresses[0].x,
+      };
 
-    // return new naver.maps.Marker({
-    //   position: new naver.maps.LatLng(result.lat, result.lng),
-    //   map,
-    // });
-    let marker = new naver.maps.Marker({
-      position: new naver.maps.LatLng(result.lat, result.lng),
-      map, 
-    })
+      let marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(result.lat, result.lng),
+        map,
+      });
 
-    let content = `
+      let content = `
     <div style="min-width: 300px; padding: 1rem;">
       <h3 style="text-align: center;">${item.name}</h3>
       <p style="text-align: center;">${item.jibunAddress}</p>
@@ -54,31 +53,29 @@ for (let item of data) {
     </div>
     `;
 
-    let infoWindow = new naver.maps.InfoWindow({
-      content: content,
-      width: 300,
-      backgroundColor: "#EEE",
-      borderColor: "#200E3A",
-      borderWidth: 3,
-      // anchorSize: ,
-      anchorSkew: true,
-      anchorColor: "#200E3A",
-    });
+      let infoWindow = new naver.maps.InfoWindow({
+        content: content,
+        width: 300,
+        backgroundColor: "#EEE",
+        borderColor: "#200E3A",
+        borderWidth: 3,
+        // anchorSize: ,
+        anchorSkew: true,
+        anchorColor: "#200E3A",
+      });
 
-    naver.maps.Event.addListener(marker, "click", () => {
-      if(infoWindow.getMap()) {
-        infoWindow.close();
-      } else {
-        infoWindow.open(map, marker);
-      }
-    })
+      naver.maps.Event.addListener(marker, "click", () => {
+        if (infoWindow.getMap()) {
+          infoWindow.close();
+        } else {
+          infoWindow.open(map, marker);
+        }
+      });
     }
   );
-
-
 }
 
-
+// 네이버지도 API 인증 문제 시 console에 표시하기
 window.navermap_authFailure = () => {
   console.log("Naver Map Authentication Failed!");
 };
